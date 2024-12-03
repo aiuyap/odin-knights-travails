@@ -2,24 +2,27 @@ function knightMoves(start, end) {
   const xDir = [-2, -2, -1, -1, 1, 1, 2, 2];
   const yDir = [-1, 1, -2, 2, -2, 2, -1, 1];
   let moves = 0;
-  let path;
-  let queue = [];
-  queue.push(start);
+  let queue = [[start, [start]]];
+  const visited = new Set();
+  visited.add(start.toString());
 
   while (queue.length) {
     let size = queue.length;
     for (let i = 0; i < size; i++) {
-      const current = queue.shift();
+      const [current, path] = queue.shift();
 
       if (current[0] === end[0] && current[1] === end[1]) {
-        return moves;
+        return path;
       }
 
       for (let j = 0; j < xDir.length; j++) {
         const newX = current[0] + xDir[j];
         const newY = current[1] + yDir[j];
-        if (newX < 8 && newX >= 0 && newY < 8 && newY >= 0) {
-          queue.push([newX, newY]);
+        const newPos = [newX, newY];
+
+        if (newX < 8 && newX >= 0 && newY < 8 && newY >= 0 && !visited.has(newPos.toString())) {
+          visited.add(newPos.toString());
+          queue.push([newPos, [...path, newPos]]);
         }
       }
     }
