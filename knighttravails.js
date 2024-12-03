@@ -12,7 +12,7 @@ function knightMoves(start, end) {
       const [current, path] = queue.shift();
 
       if (current[0] === end[0] && current[1] === end[1]) {
-        return path;
+        printMoves(path, moves);
       }
 
       for (let j = 0; j < xDir.length; j++) {
@@ -30,4 +30,11 @@ function knightMoves(start, end) {
   }
 }
 
-console.log(knightMoves([3, 3], [4, 3]));
+function printMoves(path, moves) {
+  console.log(`You made it in ${moves} move(s)! Here's your path: `);
+  path.forEach((x) => {
+    console.log(x);
+  });
+}
+
+knightMoves([0, 0], [7, 7]);
